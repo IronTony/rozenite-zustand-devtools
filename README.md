@@ -2,20 +2,20 @@
 
 A [Rozenite](https://github.com/callstackincubator/rozenite) DevTools plugin for inspecting [Zustand](https://github.com/pmndrs/zustand) store state in React Native apps.
 
-Browse, search, and inspect all your Zustand stores in real time directly from the Rozenite DevTools panel — no middleware or store modifications required.
+Browse, search, and inspect all your Zustand stores in real time directly from the Rozenite DevTools panel; no middleware or store modifications required.
 
 ## Features
 
-- **Real-time state inspection** — See live updates as your Zustand stores change
-- **Table & JSON views** — Toggle between a structured key-value table and raw JSON
-- **Collapsible nested objects** — Expand/collapse objects and arrays in table view
-- **Color-coded values** — Strings (green), numbers (blue), booleans (purple), null/undefined (gray)
-- **Store filtering** — Quickly find stores by name when you have many registered
-- **Copy to clipboard** — One-click copy of any store's state as formatted JSON
-- **Last updated timestamps** — See when each store was last modified
-- **Auto-select on load** — First store is selected automatically when the panel opens
-- **Zero store modifications** — Works with any Zustand store out of the box via `getState()` and `subscribe()`
-- **Debounced updates** — Uses `requestAnimationFrame` to batch rapid state changes and avoid flooding the bridge
+- **Real-time state inspection**: See live updates as your Zustand stores change
+- **Table & JSON views**: Toggle between a structured key-value table and raw JSON
+- **Collapsible nested objects**: Expand/collapse objects and arrays in table view
+- **Color-coded values**: Strings (green), numbers (blue), booleans (purple), null/undefined (gray)
+- **Store filtering**: Quickly find stores by name when you have many registered
+- **Copy to clipboard**: One-click copy of any store's state as formatted JSON
+- **Last updated timestamps**: See when each store was last modified
+- **Auto-select on load**: First store is selected automatically when the panel opens
+- **Zero store modifications**: Works with any Zustand store out of the box via `getState()` and `subscribe()`
+- **Debounced updates**: Uses `requestAnimationFrame` to batch rapid state changes and avoid flooding the bridge
 
 ## Prerequisites
 
@@ -102,7 +102,7 @@ The panel renders inside the Rozenite DevTools as an iframe and:
 
 Initializes the DevTools connection and begins sending state updates.
 
-- **stores** — Array of stores to register
+- **stores**: Array of stores to register
 
 ```typescript
 type StoreEntry = {
@@ -114,7 +114,7 @@ type StoreEntry = {
 };
 ```
 
-Any Zustand store created with `create()` satisfies the `store` interface — no wrappers needed. The `name` is what appears in the DevTools sidebar.
+Any Zustand store created with `create()` satisfies the `store` interface, no wrappers needed. The `name` is what appears in the DevTools sidebar.
 
 **Note:** Call this only in development (`__DEV__`). The plugin silently no-ops when DevTools is not available.
 
