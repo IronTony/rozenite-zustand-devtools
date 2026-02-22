@@ -1,0 +1,8 @@
+src/
+node_modules/
+tsconfig.json
+vite.config.ts
+rozenite.config.ts
+react-native.ts
+types.ts
+.github/
