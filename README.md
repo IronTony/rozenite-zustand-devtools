@@ -16,6 +16,7 @@ Browse, search, and inspect all your Zustand stores in real time directly from t
 - **Auto-select on load**: First store is selected automatically when the panel opens
 - **Zero store modifications**: Works with any Zustand store out of the box via `getState()` and `subscribe()`
 - **Debounced updates**: Uses `requestAnimationFrame` to batch rapid state changes and avoid flooding the bridge
+- **Production-safe**: The hook is replaced with a no-op in production builds, so no devtools code ships to users
 
 ## Prerequisites
 
@@ -30,31 +31,35 @@ npm install -D rozenite-zustand-devtools
 
 ## Setup
 
-### 1. Register your Zustand stores
+### 1. Define your stores
 
-Create a file in your app (e.g., `services/zustand/devtools.ts`) to register the stores you want to inspect:
+Create a file to list the Zustand stores you want to inspect (e.g., `services/zustand/devtools.ts`):
 
 ```typescript
-import { initZustandDevTools, StoreEntry } from 'rozenite-zustand-devtools';
+import type { StoreEntry } from 'rozenite-zustand-devtools';
 import { useMyStore } from './myStore';
 import { useAuthStore } from './authStore';
 
-const stores: StoreEntry[] = [
+export const zustandStores: StoreEntry[] = [
   { name: 'myStore', store: useMyStore },
   { name: 'auth', store: useAuthStore },
 ];
-
-if (__DEV__) {
-  initZustandDevTools(stores);
-}
 ```
 
-### 2. Import the registration file
+### 2. Call the hook in your root component
 
-Add a side-effect import early in your app's entry point (e.g., `_layout.tsx` or `App.tsx`):
+Add `useZustandDevTools` in your root layout or `App.tsx`, alongside your other Rozenite hooks:
 
-```typescript
-import './services/zustand/devtools';
+```tsx
+import { useZustandDevTools } from 'rozenite-zustand-devtools';
+import { zustandStores } from './services/zustand/devtools';
+
+export default function Layout() {
+  // Safe to call unconditionally — no-ops in production
+  useZustandDevTools(zustandStores);
+
+  return <>{/* ... */}</>;
+}
 ```
 
 ### 3. Start with Rozenite enabled
@@ -71,13 +76,15 @@ The plugin has two parts that communicate over Rozenite's WebSocket bridge:
 
 ### React Native side (runs in your app)
 
-When you call `initZustandDevTools(stores)`, the plugin:
+The `useZustandDevTools` hook:
 
-1. Connects to the Rozenite DevTools host via `@rozenite/plugin-bridge`
-2. Subscribes to each Zustand store using the standard `.subscribe()` API
-3. On any state change, serializes the store state (excluding functions) and sends it to the DevTools panel
-4. Responds to snapshot requests from the panel with the full state of all stores
-5. Debounces updates using `requestAnimationFrame` to prevent bridge flooding during rapid state changes
+1. Connects to the Rozenite DevTools host via `useRozeniteDevToolsClient` from `@rozenite/plugin-bridge`
+2. Sends an initial snapshot of all stores on mount
+3. Subscribes to each Zustand store using the standard `.subscribe()` API
+4. On any state change, serializes the store state (excluding functions) and sends it to the DevTools panel
+5. Responds to snapshot requests from the panel with the full state of all stores
+6. Debounces updates using `requestAnimationFrame` to prevent bridge flooding during rapid state changes
+7. Cleans up all subscriptions on unmount
 
 ### DevTools panel (runs in the browser)
 
@@ -98,9 +105,9 @@ The panel renders inside the Rozenite DevTools as an iframe and:
 
 ## API
 
-### `initZustandDevTools(stores: StoreEntry[])`
+### `useZustandDevTools(stores: StoreEntry[])`
 
-Initializes the DevTools connection and begins sending state updates.
+React hook that connects to the Rozenite DevTools and sends live Zustand state updates. Safe to call unconditionally — in production, the hook is replaced with a no-op at the entry-point level, so no devtools code is bundled.
 
 - **stores**: Array of stores to register
 
@@ -115,8 +122,6 @@ type StoreEntry = {
 ```
 
 Any Zustand store created with `create()` satisfies the `store` interface, no wrappers needed. The `name` is what appears in the DevTools sidebar.
-
-**Note:** Call this only in development (`__DEV__`). The plugin silently no-ops when DevTools is not available.
 
 ## Compatibility
 
