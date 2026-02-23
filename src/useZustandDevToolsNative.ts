@@ -10,7 +10,7 @@ import type {
 
 const PLUGIN_ID = 'rozenite-zustand-devtools';
 
-function toSnapshot(state: Record<string, unknown>): StoreSnapshot {
+function toSnapshot(state: object): StoreSnapshot {
   return Object.fromEntries(
     Object.entries(state).filter(([, value]) => typeof value !== 'function')
   );

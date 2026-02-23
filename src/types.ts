@@ -5,7 +5,7 @@ export type AllStoresSnapshot = Record<string, StoreSnapshot>;
 export type StoreEntry = {
   name: string;
   store: {
-    getState: () => Record<string, unknown>;
+    getState: () => object;
     subscribe: (listener: () => void) => () => void;
   };
 };
