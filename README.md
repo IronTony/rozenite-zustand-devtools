@@ -119,7 +119,7 @@ React hook that connects to the Rozenite DevTools and sends live Zustand state u
 type StoreEntry = {
   name: string;
   store: {
-    getState: () => Record<string, unknown>;
+    getState: () => object;
     subscribe: (listener: () => void) => () => void;
   };
 };
