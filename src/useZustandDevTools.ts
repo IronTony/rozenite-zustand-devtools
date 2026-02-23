@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRozeniteDevToolsClient } from '@rozenite/plugin-bridge';
 
-import { AllStoresSnapshot, EventMap } from '../types';
+import { AllStoresSnapshot, EventMap } from './types';
 
 export function useZustandDevTools() {
   const client = useRozeniteDevToolsClient<EventMap>({
