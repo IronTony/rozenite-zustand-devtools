@@ -59,7 +59,7 @@ import { useZustandDevTools } from 'rozenite-zustand-devtools';
 import { zustandStores } from './services/zustand/devtools';
 
 export default function Layout() {
-  // Safe to call unconditionally — no-ops in production
+  // Safe to call unconditionally - no-ops in production
   useZustandDevTools(zustandStores);
 
   return <>{/* ... */}</>;
@@ -111,7 +111,7 @@ The panel renders inside the Rozenite DevTools as an iframe and:
 
 ### `useZustandDevTools(stores: StoreEntry[])`
 
-React hook that connects to the Rozenite DevTools and sends live Zustand state updates. Safe to call unconditionally — in production, the hook is replaced with a no-op at the entry-point level, so no devtools code is bundled.
+React hook that connects to the Rozenite DevTools and sends live Zustand state updates. Safe to call unconditionally - in production, the hook is replaced with a no-op at the entry-point level, so no devtools code is bundled.
 
 - **stores**: Array of stores to register
 
