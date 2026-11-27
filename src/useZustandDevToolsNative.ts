@@ -6,7 +6,7 @@ import type {
   EventMap,
   StoreEntry,
   StoreSnapshot,
-} from './types';
+} from './types.js';
 
 const PLUGIN_ID = 'rozenite-zustand-devtools';
 
