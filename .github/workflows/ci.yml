@@ -21,6 +21,6 @@ jobs:
           package-manager-cache: false
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run typecheck --if-present
-      - run: npm test --if-present
       - run: npm run build
+      - run: npm test --if-present
       - run: npm pack --ignore-scripts --dry-run
