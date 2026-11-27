@@ -21,33 +21,43 @@
   "bugs": {
     "url": "https://github.com/IronTony/rozenite-zustand-devtools/issues"
   },
-  "main": "./dist/react-native.cjs",
-  "module": "./dist/react-native.js",
-  "types": "./dist/react-native.d.ts",
+  "main": "./dist/react-native/cjs/react-native.js",
+  "module": "./dist/react-native/react-native.js",
+  "types": "./dist/react-native/react-native.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "rozenite build",
     "prepare": "npm run build",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test"
   },
   "dependencies": {
-    "@rozenite/plugin-bridge": "^1.3.0"
+    "@rozenite/plugin-bridge": "^2.8.0"
   },
   "devDependencies": {
-    "@rozenite/vite-plugin": "^1.3.0",
-    "@types/react": "~19.0.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "react-native": "0.79.6",
+    "@rozenite/vite-plugin": "2.8.0",
+    "@types/react": "~19.3.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native": "0.88.1",
     "react-native-web": "^0.21.2",
-    "rozenite": "^1.3.0",
+    "rozenite": "2.8.0",
     "typescript": "~5.8.3",
     "vite": "^7.3.1"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/react-native/react-native.d.ts",
+      "import": "./dist/react-native/react-native.js",
+      "require": "./dist/react-native/cjs/react-native.js"
+    },
+    "./package.json": "./package.json"
   }
 }

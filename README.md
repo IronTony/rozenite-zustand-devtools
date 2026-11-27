@@ -20,7 +20,7 @@ Browse, search, and inspect all your Zustand stores in real time directly from t
 - **Auto-select on load**: First store is selected automatically when the panel opens
 - **Zero store modifications**: Works with any Zustand store out of the box via `getState()` and `subscribe()`
 - **Debounced updates**: Uses `requestAnimationFrame` to batch rapid state changes and avoid flooding the bridge
-- **Production-safe**: The hook is replaced with a no-op in production builds, so no devtools code ships to users
+- **Production-safe**: Rozenite’s Metro integration strips the plugin from production builds
 
 ## Prerequisites
 
@@ -111,7 +111,7 @@ The panel renders inside the Rozenite DevTools as an iframe and:
 
 ### `useZustandDevTools(stores: StoreEntry[])`
 
-React hook that connects to the Rozenite DevTools and sends live Zustand state updates. Safe to call unconditionally - in production, the hook is replaced with a no-op at the entry-point level, so no devtools code is bundled.
+React hook that connects to the Rozenite DevTools and sends live Zustand state updates. Safe to call unconditionally. The hook is a no-op outside React Native development, and the Rozenite Metro integration excludes the plugin implementation from production bundles.
 
 - **stores**: Array of stores to register
 
@@ -131,10 +131,9 @@ Any Zustand store created with `create()` satisfies the `store` interface, no wr
 
 | Dependency | Version |
 |------------|---------|
-| Rozenite | >= 1.3.0 |
-| Zustand | Any version (uses standard `getState`/`subscribe` API) |
-| React Native | >= 0.70 |
-| React | >= 18 |
+| Rozenite | 2.8.x (use matching versions of Rozenite and your bundler integration) |
+| Zustand | Uses the standard `getState` and `subscribe` APIs |
+| Expo / React Native | Expo SDK 58 with React Native 0.88 and React 19.3 |
 
 ## License
 
